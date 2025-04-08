@@ -1,0 +1,24 @@
+{
+  "questions": [
+    {
+      "question": "What is the gain of a common-source MOSFET amplifier with a resistive load?",
+      "options": [
+        "gm * Rd",
+        "1/gm",
+        "Vdd - Vgs",
+        "Rd / gm"
+      ],
+      "answer": "gm * Rd"
+    },
+    {
+      "question": "A folded cascode amplifier improves:",
+      "options": [
+        "Input impedance",
+        "Output swing",
+        "Gain and bandwidth",
+        "Noise"
+      ],
+      "answer": "Gain and bandwidth"
+    }
+  ]
+}

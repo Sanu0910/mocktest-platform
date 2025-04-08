@@ -1,0 +1,24 @@
+{
+  "questions": [
+    {
+      "question": "Which of the following describes S11 in RF systems?",
+      "options": [
+        "Input return loss",
+        "Output reflection coefficient",
+        "Forward gain",
+        "Power delivered to load"
+      ],
+      "answer": "Input return loss"
+    },
+    {
+      "question": "The characteristic impedance of a 50-ohm coaxial cable mainly depends on:",
+      "options": [
+        "Cable length",
+        "Dielectric constant and geometry",
+        "Signal frequency",
+        "Shield thickness"
+      ],
+      "answer": "Dielectric constant and geometry"
+    }
+  ]
+}
