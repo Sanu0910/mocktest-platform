@@ -82,7 +82,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
           emailjs.send("service_2d6f80j", "template_ap0b5t8", {
             user_name: user.name,
-            user_email: user.email
+            user_email: user.email,
+            subject: subject,
+            score: score,
+            total_questions: totalQuestions,
+            date: currentDate,
+            time_taken: timeTaken
           }).then(function(response) {
             console.log("✅ Email sent successfully:", response);
             let scores = JSON.parse(localStorage.getItem('leaderboard')) || [];
