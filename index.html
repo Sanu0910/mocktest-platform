@@ -16,20 +16,36 @@
         <option value="analog">Analog Design</option>
         <option value="rf">RF Engineering</option>
       </select>
+      <input type="number" id="time" placeholder="Time limit in minutes" min="1" max="60" required />
       <button type="submit">Start Test</button>
     </form>
 
     <h2>Leaderboard (Top Scores)</h2>
+    <select id="filter-subject">
+      <option value="all">All Subjects</option>
+      <option value="analog">Analog Design</option>
+      <option value="rf">RF Engineering</option>
+    </select>
     <ul id="leaderboard"></ul>
   </div>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const list = document.getElementById('leaderboard');
+      const filter = document.getElementById('filter-subject');
       const scores = JSON.parse(localStorage.getItem('leaderboard')) || [];
-      const sorted = scores.sort((a, b) => b.score - a.score).slice(0, 5);
-      list.innerHTML = sorted.map(entry =>
-        `<li>${entry.name} - ${entry.subject}: ${entry.score}/${entry.total}</li>`
-      ).join('');
+
+      const renderLeaderboard = (subject) => {
+        let filtered = subject === "all" ? scores : scores.filter(s => s.subject === subject);
+        const sorted = filtered.sort((a, b) => b.score - a.score).slice(0, 5);
+        list.innerHTML = sorted.map(entry =>
+          `<li>${entry.name} - ${entry.subject}: ${entry.score}/${entry.total}</li>`
+        ).join('');
+      };
+
+      renderLeaderboard("all");
+      filter.addEventListener('change', () => {
+        renderLeaderboard(filter.value);
+      });
     });
   </script>
   <script src="script.js"></script>

@@ -6,8 +6,9 @@ document.addEventListener('DOMContentLoaded', function () {
       const name = document.getElementById('name').value;
       const email = document.getElementById('email').value;
       const subject = document.getElementById('subject').value;
-      localStorage.setItem('user', JSON.stringify({ name, email, subject }));
-      localStorage.setItem("startTime", Date.now()); // Track start time
+      const timeLimit = parseInt(document.getElementById('time').value, 10) * 60;
+      localStorage.setItem('user', JSON.stringify({ name, email, subject, timeLimit }));
+      localStorage.setItem("startTime", Date.now());
       window.location.href = 'test.html';
     });
   }
@@ -16,10 +17,12 @@ document.addEventListener('DOMContentLoaded', function () {
   const quizContainer = document.getElementById('quiz-container');
   const submitBtn = document.getElementById('submit-btn');
   const scoreDisplay = document.getElementById('score');
+  const timerDisplay = document.getElementById('timer');
 
   if (quizContainer && submitBtn) {
     const user = JSON.parse(localStorage.getItem('user'));
     const subject = user.subject;
+    let timer, remainingTime = user.timeLimit;
 
     fetch(`data/${subject}.json`)
       .then(res => res.json())
@@ -35,7 +38,21 @@ document.addEventListener('DOMContentLoaded', function () {
           quizContainer.appendChild(div);
         });
 
+        const updateTimer = () => {
+          let minutes = Math.floor(remainingTime / 60);
+          let seconds = remainingTime % 60;
+          timerDisplay.textContent = \`⏳ Time Left: \${minutes.toString().padStart(2, '0')}:\${seconds.toString().padStart(2, '0')}\`;
+          if (remainingTime <= 0) {
+            clearInterval(timer);
+            submitBtn.click();
+          }
+          remainingTime--;
+        };
+        updateTimer();
+        timer = setInterval(updateTimer, 1000);
+
         submitBtn.addEventListener('click', () => {
+          clearInterval(timer);
           let score = 0;
           const startTime = localStorage.getItem("startTime");
           const timeTaken = Math.floor((Date.now() - startTime) / 1000);
@@ -46,10 +63,10 @@ document.addEventListener('DOMContentLoaded', function () {
           });
 
           const totalQuestions = data.questions.length;
-          scoreDisplay.textContent = `Score: ${score}/${totalQuestions}`;
+          scoreDisplay.innerHTML = `<h2>Thank you, ${user.name}!</h2><p>Your score: <strong>${score}/${totalQuestions}</strong><br>Redirecting to home...</p>`;
           const currentDate = new Date().toLocaleDateString();
 
-          emailjs.send("service_2d6f80j", "template_gt90kbl", {
+          emailjs.send("service_2d6f80j", "template_1g3fsed", {
             user_name: user.name,
             user_email: user.email,
             subject: subject,
@@ -59,29 +76,20 @@ document.addEventListener('DOMContentLoaded', function () {
             time_taken: timeTaken
           })
           .then(function(response) {
-            alert("✅ Score sent successfully to your email!");
-            console.log("EmailJS Success:", response);
-          }, function(error) {
-            alert("❌ Failed to send email. Please check template or keys.");
-            console.error("EmailJS Error:", error);
-          });
-
-          submitBtn.disabled = true;
-            // Save score to localStorage leaderboard
+            console.log("Email sent:", response);
             let scores = JSON.parse(localStorage.getItem('leaderboard')) || [];
             scores.push({ name: user.name, subject: subject, score: score, total: totalQuestions });
             localStorage.setItem('leaderboard', JSON.stringify(scores));
-
-            // Redirect to home after short delay
             setTimeout(() => {
               window.location.href = 'index.html';
-            }, 3000);
+            }, 4000);
+          }, function(error) {
+            console.error("EmailJS error:", error);
+            alert("❌ Failed to send email. Please check your EmailJS settings.");
+          });
 
+          submitBtn.disabled = true;
         });
-      })
-      .catch(error => {
-        console.error("Failed to load quiz data:", error);
-        quizContainer.innerHTML = "<p style='color:red;'>❌ Failed to load questions. Please check your data file or path.</p>";
       });
   }
 });
