@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function () {
           scoreDisplay.innerHTML = reviewHTML;
           const currentDate = new Date().toLocaleDateString();
 
-          emailjs.send("service_2d6f80j", "template_1g3fsed", {
+          emailjs.send("service_2d6f80j", "template_ap0b5t8", {
             user_name: user.name,
             user_email: user.email,
             subject: subject,
