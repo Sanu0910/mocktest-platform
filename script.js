@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
           const div = document.createElement('div');
           div.className = 'question-block';
           div.innerHTML = `<p><strong>Q${i + 1}:</strong> ${q.question}</p>`;
-          q.options.forEach((opt, j) => {
+          q.options.forEach((opt) => {
             div.innerHTML += `
               <label>
                 <input type="radio" name="q${i}" value="${opt}">
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
           const startTime = localStorage.getItem("startTime");
           const timeTaken = Math.floor((Date.now() - startTime) / 1000);
           const totalQuestions = data.questions.length;
-          let reviewHTML = `<h2>Thank you, ${user.name}!</h2><p>Your score: <strong>{score}/${totalQuestions}</strong></p>`;
+          let reviewHTML = `<h2>Thank you, ${user.name}!</h2><p>Your score: <strong>${score}/${totalQuestions}</strong></p>`;
           
           data.questions.forEach((q, i) => {
             const selected = document.querySelector(`input[name="q${i}"]:checked`);
@@ -82,24 +82,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
           emailjs.send("service_2d6f80j", "template_ap0b5t8", {
             user_name: user.name,
-            user_email: user.email,
-            subject: subject,
-            score: score,
-            total_questions: totalQuestions,
-            date: currentDate,
-            time_taken: timeTaken
-          })
-          .then(function(response) {
-            console.log("Email sent:", response);
+            user_email: user.email
+          }).then(function(response) {
+            console.log("✅ Email sent successfully:", response);
             let scores = JSON.parse(localStorage.getItem('leaderboard')) || [];
             scores.push({ name: user.name, subject: subject, score: score, total: totalQuestions });
             localStorage.setItem('leaderboard', JSON.stringify(scores));
 
             setTimeout(() => {
               window.location.href = 'index.html';
-            }, 8000); // redirect after showing review
+            }, 8000);
           }, function(error) {
-            console.error("EmailJS error:", error);
+            console.error("❌ EmailJS error:", error);
             alert("❌ Failed to send email. Please check your EmailJS settings.");
           });
 
