@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const updateTimer = () => {
           let minutes = Math.floor(remainingTime / 60);
           let seconds = remainingTime % 60;
-          timerDisplay.textContent = \`⏳ Time Left: \${minutes.toString().padStart(2, '0')}:\${seconds.toString().padStart(2, '0')}\`;
+          timerDisplay.textContent = `⏳ Time Left: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
           if (remainingTime <= 0) {
             clearInterval(timer);
             submitBtn.click();
