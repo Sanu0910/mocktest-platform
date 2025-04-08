@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const submitBtn = document.getElementById('submit-btn');
   const scoreDisplay = document.getElementById('score');
 
-  if (quizContainer) {
+  if (quizContainer && submitBtn) {
     const user = JSON.parse(localStorage.getItem('user'));
     const subject = user.subject;
 
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
           scoreDisplay.textContent = `Score: ${score}/${totalQuestions}`;
           const currentDate = new Date().toLocaleDateString();
 
-          emailjs.send("service_2d6f80j", "template_fjr2x0p", {
+          emailjs.send("service_2d6f80j", "template_gt90kbl", {
             user_name: user.name,
             user_email: user.email,
             subject: subject,
@@ -57,10 +57,31 @@ document.addEventListener('DOMContentLoaded', function () {
             total_questions: totalQuestions,
             date: currentDate,
             time_taken: timeTaken
+          })
+          .then(function(response) {
+            alert("✅ Score sent successfully to your email!");
+            console.log("EmailJS Success:", response);
+          }, function(error) {
+            alert("❌ Failed to send email. Please check template or keys.");
+            console.error("EmailJS Error:", error);
           });
 
           submitBtn.disabled = true;
+            // Save score to localStorage leaderboard
+            let scores = JSON.parse(localStorage.getItem('leaderboard')) || [];
+            scores.push({ name: user.name, subject: subject, score: score, total: totalQuestions });
+            localStorage.setItem('leaderboard', JSON.stringify(scores));
+
+            // Redirect to home after short delay
+            setTimeout(() => {
+              window.location.href = 'index.html';
+            }, 3000);
+
         });
+      })
+      .catch(error => {
+        console.error("Failed to load quiz data:", error);
+        quizContainer.innerHTML = "<p style='color:red;'>❌ Failed to load questions. Please check your data file or path.</p>";
       });
   }
 });

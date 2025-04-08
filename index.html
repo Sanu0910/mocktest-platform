@@ -18,12 +18,20 @@
       </select>
       <button type="submit">Start Test</button>
     </form>
+
     <h2>Leaderboard (Top Scores)</h2>
-    <ul id="leaderboard">
-      <li>Aryan - Analog: 4/5</li>
-      <li>Sanya - RF: 3/5</li>
-    </ul>
+    <ul id="leaderboard"></ul>
   </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const list = document.getElementById('leaderboard');
+      const scores = JSON.parse(localStorage.getItem('leaderboard')) || [];
+      const sorted = scores.sort((a, b) => b.score - a.score).slice(0, 5);
+      list.innerHTML = sorted.map(entry =>
+        `<li>${entry.name} - ${entry.subject}: ${entry.score}/${entry.total}</li>`
+      ).join('');
+    });
+  </script>
   <script src="script.js"></script>
 </body>
 </html>
