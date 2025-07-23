@@ -170,3 +170,51 @@ audio {
 .balloon:nth-child(4) { left: 60%; animation-duration: 28s; background-color: rgba(255, 87, 34, 0.7); }
 .balloon:nth-child(5) { left: 80%; animation-duration: 23s; background-color: rgba(156, 39, 176, 0.7); }
 .balloon:nth-child(6) { left: 95%; animation-duration: 20s; background-color: rgba(233, 30, 99, 0.7); }
+
+@media (max-width: 768px) {
+    .container {
+        padding: 30px;
+    }
+
+    header h1 {
+        font-size: 3em;
+    }
+
+    .slideshow {
+        height: 300px;
+    }
+
+    .message h2 {
+        font-size: 2em;
+    }
+
+    .message p {
+        font-size: 1.1em;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+
+    .container {
+        padding: 20px;
+    }
+
+    header h1 {
+        font-size: 2.5em;
+    }
+
+    .slideshow {
+        height: 200px;
+    }
+
+    .message h2 {
+        font-size: 1.8em;
+    }
+
+    .message p {
+        font-size: 1em;
+    }
+}
