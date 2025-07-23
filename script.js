@@ -9,49 +9,44 @@ document.addEventListener('DOMContentLoaded', () => {
         container.appendChild(confetti);
     }
 
-    const pages = document.querySelectorAll('.page');
-    let currentPage = 0;
-    let interval;
+    const photos = document.querySelectorAll('.photo-container img');
+    let currentPhoto = 0;
 
-    function startSlideshow() {
-        interval = setInterval(() => {
-            if (currentPage < pages.length) {
-                pages[currentPage].classList.add('flipped');
-                currentPage++;
-            } else {
-                pages.forEach(page => page.classList.remove('flipped'));
-                currentPage = 0;
-            }
-        }, 3000);
+    function showNextPhoto() {
+        photos.forEach(photo => {
+            photo.classList.remove('active');
+            photo.classList.add('background');
+        });
+
+        photos[currentPhoto].classList.remove('background');
+        photos[currentPhoto].classList.add('active');
+
+        currentPhoto = (currentPhoto + 1) % photos.length;
     }
 
-    startSlideshow();
+    setInterval(showNextPhoto, 3000);
 
     const photoUpload = document.getElementById('photo-upload');
     photoUpload.addEventListener('change', (event) => {
         const files = event.target.files;
-        const book = document.querySelector('.book');
-        book.innerHTML = '';
+        const photoContainer = document.querySelector('.photo-container');
+        photoContainer.innerHTML = '';
 
         for (const file of files) {
             const reader = new FileReader();
             reader.onload = (e) => {
-                const page = document.createElement('div');
-                page.classList.add('page');
                 const img = document.createElement('img');
                 img.src = e.target.result;
-                page.appendChild(img);
-                book.appendChild(page);
+                photoContainer.appendChild(img);
             };
             reader.readAsDataURL(file);
         }
 
-        clearInterval(interval);
         setTimeout(() => {
-            const newPages = document.querySelectorAll('.page');
-            pages = newPages;
-            currentPage = 0;
-            startSlideshow();
+            const newPhotos = document.querySelectorAll('.photo-container img');
+            photos = newPhotos;
+            currentPhoto = 0;
+            showNextPhoto();
         }, 1000);
     });
 });
