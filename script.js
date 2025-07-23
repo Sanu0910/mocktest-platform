@@ -8,6 +8,19 @@ document.addEventListener('DOMContentLoaded', () => {
         confetti.style.animationDelay = `${Math.random() * 5}s`;
         container.appendChild(confetti);
     }
+
+    const pages = document.querySelectorAll('.page');
+    let currentPage = 0;
+
+    setInterval(() => {
+        if (currentPage < pages.length) {
+            pages[currentPage].classList.add('flipped');
+            currentPage++;
+        } else {
+            pages.forEach(page => page.classList.remove('flipped'));
+            currentPage = 0;
+        }
+    }, 3000);
 });
 
 // Add confetti styles to the CSS
