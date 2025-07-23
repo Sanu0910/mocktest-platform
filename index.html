@@ -1,53 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Mock Test Platform</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday!</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Welcome to Mock Test Platform</h1>
-    <form id="user-form">
-      <input type="text" id="name" placeholder="Enter your name" required />
-      <input type="email" id="email" placeholder="Enter your email" required />
-      <select id="subject">
-        <option value="analog">Analog Design</option>
-        <option value="rf">RF Engineering</option>
-      </select>
-      <input type="number" id="time" placeholder="Time limit in minutes" min="1" max="60" required />
-      <button type="submit">Start Test</button>
-    </form>
-
-    <h2>Leaderboard (Top Scores)</h2>
-    <select id="filter-subject">
-      <option value="all">All Subjects</option>
-      <option value="analog">Analog Design</option>
-      <option value="rf">RF Engineering</option>
-    </select>
-    <ul id="leaderboard"></ul>
-  </div>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const list = document.getElementById('leaderboard');
-      const filter = document.getElementById('filter-subject');
-      const scores = JSON.parse(localStorage.getItem('leaderboard')) || [];
-
-      const renderLeaderboard = (subject) => {
-        let filtered = subject === "all" ? scores : scores.filter(s => s.subject === subject);
-        const sorted = filtered.sort((a, b) => b.score - a.score).slice(0, 5);
-        list.innerHTML = sorted.map(entry =>
-          `<li>${entry.name} - ${entry.subject}: ${entry.score}/${entry.total}</li>`
-        ).join('');
-      };
-
-      renderLeaderboard("all");
-      filter.addEventListener('change', () => {
-        renderLeaderboard(filter.value);
-      });
-    });
-  </script>
-  <script src="script.js"></script>
+    <div class="container">
+        <header>
+            <h1>Happy Birthday Mayuri!</h1>
+        </header>
+        <main>
+            <section class="slideshow">
+                <div class="book">
+                    <div class="page">
+                        <img src="https://images.unsplash.com/photo-1558636508-e0db3814bd1d?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YmlydGhkYXl8ZW58MHx8MHx8fDA%3D" alt="Birthday Image 1">
+                    </div>
+                    <div class="page">
+                        <img src="https://images.unsplash.com/photo-1583875762487-5f8f7c718d14?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YmlydGhkYXl8ZW58MHx8MHx8fDA%3D" alt="Birthday Image 2">
+                    </div>
+                    <div class="page">
+                        <img src="https://images.unsplash.com/photo-1553135422-400ee5852b27?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YmlydGhkYXl8ZW58MHx8MHx8fDA%3D" alt="Birthday Image 3">
+                    </div>
+                </div>
+            </section>
+            <section class="message">
+                <h2>Wishing you a fantastic birthday!</h2>
+                <p>May your day be filled with joy, laughter, and everything you wished for. Have a great year ahead!</p>
+            </section>
+            <section class="upload">
+                <input type="file" id="photo-upload" multiple accept="image/*">
+                <label for="photo-upload">Upload Photos</label>
+            </section>
+        </main>
+        <footer>
+            <audio controls autoplay>
+                <source src="https://www.bensound.com/bensound-music/bensound-ukulele.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </footer>
+    </div>
+    <div class="balloons">
+        <div class="balloon"></div>
+        <div class="balloon"></div>
+        <div class="balloon"></div>
+        <div class="balloon"></div>
+        <div class="balloon"></div>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
