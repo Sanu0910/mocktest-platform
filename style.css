@@ -190,3 +190,25 @@ audio {
     animation-duration: 13s;
     background-color: rgba(204, 0, 204, 0.8);
 }
+
+.upload {
+    margin-top: 20px;
+}
+
+#photo-upload {
+    display: none;
+}
+
+label[for="photo-upload"] {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ff4081;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+label[for="photo-upload"]:hover {
+    background-color: #d81b60;
+}

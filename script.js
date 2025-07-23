@@ -11,16 +11,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const pages = document.querySelectorAll('.page');
     let currentPage = 0;
+    let interval;
 
-    setInterval(() => {
-        if (currentPage < pages.length) {
-            pages[currentPage].classList.add('flipped');
-            currentPage++;
-        } else {
-            pages.forEach(page => page.classList.remove('flipped'));
-            currentPage = 0;
+    function startSlideshow() {
+        interval = setInterval(() => {
+            if (currentPage < pages.length) {
+                pages[currentPage].classList.add('flipped');
+                currentPage++;
+            } else {
+                pages.forEach(page => page.classList.remove('flipped'));
+                currentPage = 0;
+            }
+        }, 3000);
+    }
+
+    startSlideshow();
+
+    const photoUpload = document.getElementById('photo-upload');
+    photoUpload.addEventListener('change', (event) => {
+        const files = event.target.files;
+        const book = document.querySelector('.book');
+        book.innerHTML = '';
+
+        for (const file of files) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const page = document.createElement('div');
+                page.classList.add('page');
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                page.appendChild(img);
+                book.appendChild(page);
+            };
+            reader.readAsDataURL(file);
         }
-    }, 3000);
+
+        clearInterval(interval);
+        setTimeout(() => {
+            const newPages = document.querySelectorAll('.page');
+            pages = newPages;
+            currentPage = 0;
+            startSlideshow();
+        }, 1000);
+    });
 });
 
 // Add confetti styles to the CSS
